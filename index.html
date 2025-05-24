@@ -14,7 +14,6 @@
         <div class="card" id="threeDCard">
             <div class="card-content">
                 <h2 class="card-title">夜雨若盈</h2>
-                <p class="card-description">悬停在此卡片上可以释放CSS透视的力量</p>
                 <div class="card-image-container">
                     <img src="me.png" alt="个人头像" class="card-image">
                 </div>
@@ -69,7 +68,7 @@
         function updateTransforms() {
             if (isMouseEntered) {
                 cardElements.title.style.transform = 'translateZ(50px)';
-                cardElements.description.style.transform = 'translateZ(60px)';
+                if (cardElements.description) cardElements.description.style.transform = 'translateZ(60px)';
                 cardElements.imageContainer.style.transform = 'translateZ(100px)';
                 cardElements.link.style.transform = 'translateZ(20px)';
                 cardElements.button.style.transform = 'translateZ(20px)';
