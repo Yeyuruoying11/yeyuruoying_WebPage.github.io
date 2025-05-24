@@ -5,6 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>个人简介</title>
     <link rel="stylesheet" href="styles.css">
+    
+    <!-- Firebase SDKs -->
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-analytics.js";
+      import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-database.js"; 
+
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyBoF8iDEYaz-nDz37c3Zm9x8Of4ULNtZw4",
+        authDomain: "mywebsite-22e7d.firebaseapp.com",
+        projectId: "mywebsite-22e7d",
+        storageBucket: "mywebsite-22e7d.firebasestorage.app",
+        messagingSenderId: "482028113611",
+        appId: "1:482028113611:web:fb03d4a33b4adfba15154e",
+        measurementId: "G-ZB3S3902WD"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+
+      // Get a reference to the Firebase Realtime Database
+      const db = getDatabase(app);
+      const userRef = ref(db, 'users/1');  // Specify the location in the database
+
+      // Write some data to Firebase
+      set(userRef, {
+        username: "Yihao Tao",
+        email: "example@example.com",
+        profile_picture: "https://link-to-image.jpg"
+      });
+    </script>
 </head>
 <body>
     <!-- 导航栏 -->
@@ -31,80 +65,38 @@
         </div>
     </section>
 
-    <!-- 项目展示 -->
+    <!-- 项目区域 -->
     <section id="projects">
         <div class="container">
             <h2>我的项目</h2>
-            <div class="card-container">
-                <div class="card">
-                    <img src="project1.jpg" alt="项目1">
-                    <h3>项目 1</h3>
-                    <p>描述这个项目的内容。</p>
-                </div>
-                <div class="card">
-                    <img src="project2.jpg" alt="项目2">
-                    <h3>项目 2</h3>
-                    <p>描述这个项目的内容。</p>
-                </div>
-                <div class="card">
-                    <img src="project3.jpg" alt="项目3">
-                    <h3>项目 3</h3>
-                    <p>描述这个项目的内容。</p>
-                </div>
-            </div>
+            <p>这里展示我曾经参与过的一些项目。</p>
         </div>
     </section>
 
-    <!-- 技能展示 -->
+    <!-- 技能区域 -->
     <section id="skills">
         <div class="container">
-            <h2>技能</h2>
-            <div class="skills-container">
-                <div class="skill">
-                    <h3>HTML</h3>
-                    <div class="progress-bar">
-                        <div class="progress" style="width: 90%;"></div>
-                    </div>
-                </div>
-                <div class="skill">
-                    <h3>CSS</h3>
-                    <div class="progress-bar">
-                        <div class="progress" style="width: 80%;"></div>
-                    </div>
-                </div>
-                <div class="skill">
-                    <h3>JavaScript</h3>
-                    <div class="progress-bar">
-                        <div class="progress" style="width: 70%;"></div>
-                    </div>
-                </div>
-            </div>
+            <h2>我的技能</h2>
+            <p>我精通以下技术：</p>
+            <ul>
+                <li>前端开发 (HTML, CSS, JavaScript)</li>
+                <li>后端开发 (Node.js, Express)</li>
+                <li>数据库 (Firebase, MongoDB)</li>
+                <li>版本控制 (Git)</li>
+            </ul>
         </div>
     </section>
 
-    <!-- 联系我 -->
+    <!-- 联系我区域 -->
     <section id="contact">
         <div class="container">
             <h2>联系我</h2>
-            <form action="#" method="post">
-                <input type="text" name="name" placeholder="你的名字" required>
-                <input type="email" name="email" placeholder="你的邮箱" required>
-                <textarea name="message" placeholder="你的消息" required></textarea>
-                <button type="submit">发送消息</button>
-            </form>
+            <p>如果你对我的工作感兴趣，可以通过以下方式联系我：</p>
+            <ul>
+                <li>Email: example@example.com</li>
+                <li>LinkedIn: <a href="https://www.linkedin.com" target="_blank">点击这里</a></li>
+            </ul>
         </div>
     </section>
-
-    <!-- 页脚 -->
-    <footer>
-        <div class="container">
-            <p>版权所有 © 2025 Yihao Tao</p>
-            <div class="social-links">
-                <a href="#">GitHub</a>
-                <a href="#">LinkedIn</a>
-                <a href="#">Twitter</a>
-            </div>
-        </div>
-    </footer>
 </body>
 </html>
