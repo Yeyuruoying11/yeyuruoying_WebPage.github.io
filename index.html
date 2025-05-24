@@ -1,12 +1,110 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Yihao Tao's Site</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人简介</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Hello, I'm Yihao Tao</h1>
-  <p>This is my personal website.</p>
+    <!-- 导航栏 -->
+    <nav>
+        <div class="container">
+            <h1>Yihao Tao</h1>
+            <ul>
+                <li><a href="#about">关于我</a></li>
+                <li><a href="#projects">项目</a></li>
+                <li><a href="#skills">技能</a></li>
+                <li><a href="#contact">联系我</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 欢迎区域 -->
+    <section id="about">
+        <div class="container">
+            <div class="welcome">
+                <h2>欢迎来到我的个人页面</h2>
+                <p>你好，我是 Yihao Tao，一个热爱编程和设计的开发者。</p>
+                <img src="avatar.jpg" alt="头像" class="avatar">
+            </div>
+        </div>
+    </section>
+
+    <!-- 项目展示 -->
+    <section id="projects">
+        <div class="container">
+            <h2>我的项目</h2>
+            <div class="card-container">
+                <div class="card">
+                    <img src="project1.jpg" alt="项目1">
+                    <h3>项目 1</h3>
+                    <p>描述这个项目的内容。</p>
+                </div>
+                <div class="card">
+                    <img src="project2.jpg" alt="项目2">
+                    <h3>项目 2</h3>
+                    <p>描述这个项目的内容。</p>
+                </div>
+                <div class="card">
+                    <img src="project3.jpg" alt="项目3">
+                    <h3>项目 3</h3>
+                    <p>描述这个项目的内容。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技能展示 -->
+    <section id="skills">
+        <div class="container">
+            <h2>技能</h2>
+            <div class="skills-container">
+                <div class="skill">
+                    <h3>HTML</h3>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 90%;"></div>
+                    </div>
+                </div>
+                <div class="skill">
+                    <h3>CSS</h3>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 80%;"></div>
+                    </div>
+                </div>
+                <div class="skill">
+                    <h3>JavaScript</h3>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 70%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我 -->
+    <section id="contact">
+        <div class="container">
+            <h2>联系我</h2>
+            <form action="#" method="post">
+                <input type="text" name="name" placeholder="你的名字" required>
+                <input type="email" name="email" placeholder="你的邮箱" required>
+                <textarea name="message" placeholder="你的消息" required></textarea>
+                <button type="submit">发送消息</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <p>版权所有 © 2025 Yihao Tao</p>
+            <div class="social-links">
+                <a href="#">GitHub</a>
+                <a href="#">LinkedIn</a>
+                <a href="#">Twitter</a>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
