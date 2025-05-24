@@ -96,9 +96,10 @@ body {
 /* Card Actions */
 .card-actions {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     margin-top: 32px;
+    padding-left: 8px;
 }
 
 .card-link {
