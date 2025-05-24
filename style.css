@@ -467,17 +467,51 @@ body {
 .submit-button {
     background: #3b82f6;
     color: #ffffff;
-    padding: 12px 24px;
+    padding: 16px 24px;
     border: none;
     border-radius: 12px;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease-out;
+    width: 100%;
+    min-height: 48px;
+    /* 移动端触摸优化 */
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .submit-button:hover {
     background: #2563eb;
+    transform: translateY(-1px);
+}
+
+.submit-button:active {
+    background: #1d4ed8;
+    transform: translateY(0);
+}
+
+.submit-button:disabled {
+    background: #6b7280;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.submit-button:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+/* 移动端专用按钮样式 */
+@media (max-width: 768px) {
+    .submit-button {
+        padding: 18px 24px;
+        font-size: 18px;
+        min-height: 52px;
+        border-radius: 16px;
+    }
 }
 
 .messages-list {
@@ -592,4 +626,4 @@ body {
     }
 }
 
-/* 强制缓存更新 - v2.0 */ 
+/* 强制缓存更新 - v2.1 - 移动端优化 */ 

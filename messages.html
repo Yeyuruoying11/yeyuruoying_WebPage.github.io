@@ -4,24 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>留言板 - 夜雨若盈</title>
-    <link rel="stylesheet" href="style.css?v=2.0">
+    <link rel="stylesheet" href="style.css?v=2.1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     
     <!-- Firebase SDK -->
     <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-        import { getFirestore, collection, addDoc, getDocs, orderBy, query, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js';
+        import { getFirestore, collection, addDoc, getDocs, orderBy, query, serverTimestamp } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js';
         
-        // Firebase 配置 (请替换为您的实际配置)
+        // Firebase 配置
         const firebaseConfig = {
-            apiKey: "your-api-key",
-            authDomain: "your-project.firebaseapp.com",
-            projectId: "your-project-id",
-            storageBucket: "your-project.appspot.com",
-            messagingSenderId: "123456789",
-            appId: "your-app-id"
+            apiKey: "AIzaSyBoF8iDEYaz-nDz37c3Zm9x8Of4ULNtZw4",
+            authDomain: "mywebsite-22e7d.firebaseapp.com",
+            projectId: "mywebsite-22e7d",
+            storageBucket: "mywebsite-22e7d.firebasestorage.app",
+            messagingSenderId: "482028113611",
+            appId: "1:482028113611:web:fb03d4a33b4adfba15154e",
+            measurementId: "G-ZB3S3902WD"
         };
         
         // 初始化 Firebase
@@ -39,31 +40,67 @@
         
         // 页面加载完成后执行
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('页面加载完成，开始初始化...');
             loadMessages();
             
             // 绑定提交表单事件
-            document.getElementById('messageForm').addEventListener('submit', submitMessage);
+            const form = document.getElementById('messageForm');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            if (form && submitBtn) {
+                console.log('找到表单和按钮，绑定事件...');
+                
+                // 表单提交事件
+                form.addEventListener('submit', submitMessage);
+                
+                // 按钮点击事件（移动端兼容）
+                submitBtn.addEventListener('click', function(e) {
+                    console.log('按钮被点击');
+                    e.preventDefault();
+                    submitMessage(e);
+                });
+                
+                // 触摸事件支持（移动端）
+                submitBtn.addEventListener('touchend', function(e) {
+                    console.log('按钮被触摸');
+                    e.preventDefault();
+                    submitMessage(e);
+                });
+            } else {
+                console.error('找不到表单或按钮元素');
+            }
         });
         
         // 提交留言
         async function submitMessage(e) {
+            console.log('submitMessage 函数被调用');
             e.preventDefault();
             
+            const submitBtn = document.getElementById('submitBtn');
             const name = document.getElementById('userName').value.trim();
             const message = document.getElementById('userMessage').value.trim();
+            
+            console.log('表单数据:', { name, message });
             
             if (!name || !message) {
                 alert('请填写姓名和留言内容！');
                 return;
             }
             
+            // 禁用按钮防止重复提交
+            submitBtn.disabled = true;
+            submitBtn.textContent = '提交中...';
+            
             try {
+                console.log('开始提交到Firebase...');
                 await addDoc(collection(db, 'messages'), {
                     name: name,
                     message: message,
                     timestamp: serverTimestamp(),
                     createdAt: new Date().toISOString()
                 });
+                
+                console.log('提交成功');
                 
                 // 清空表单
                 document.getElementById('messageForm').reset();
@@ -74,12 +111,17 @@
                 alert('留言提交成功！');
             } catch (error) {
                 console.error('提交留言失败:', error);
-                alert('提交失败，请稍后重试！');
+                alert('提交失败，请稍后重试！错误信息: ' + error.message);
+            } finally {
+                // 恢复按钮状态
+                submitBtn.disabled = false;
+                submitBtn.textContent = '发表留言';
             }
         }
         
         // 加载留言
         async function loadMessages() {
+            console.log('开始加载留言...');
             try {
                 const q = query(collection(db, 'messages'), orderBy('timestamp', 'desc'));
                 const querySnapshot = await getDocs(q);
@@ -89,9 +131,11 @@
                 
                 if (querySnapshot.empty) {
                     messagesContainer.innerHTML = '<p class="no-messages">暂无留言，快来留下第一条留言吧！</p>';
+                    console.log('没有找到留言');
                     return;
                 }
                 
+                console.log('找到', querySnapshot.size, '条留言');
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
                     const messageElement = createMessageElement(data);
@@ -155,7 +199,7 @@
                         <label for="userMessage">留言内容 *</label>
                         <textarea id="userMessage" name="userMessage" required maxlength="500" rows="4" placeholder="请输入留言内容..."></textarea>
                     </div>
-                    <button type="submit" class="submit-button">发表留言</button>
+                    <button type="submit" id="submitBtn" class="submit-button">发表留言</button>
                 </form>
             </div>
             
