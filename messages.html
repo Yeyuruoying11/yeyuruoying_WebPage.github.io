@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>留言板 - 夜雨若盈</title>
+    <link rel="stylesheet" href="style.css?v=2.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore, collection, addDoc, getDocs, orderBy, query, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        
+        // Firebase 配置 (请替换为您的实际配置)
+        const firebaseConfig = {
+            apiKey: "your-api-key",
+            authDomain: "your-project.firebaseapp.com",
+            projectId: "your-project-id",
+            storageBucket: "your-project.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "your-app-id"
+        };
+        
+        // 初始化 Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        
+        // 全局变量
+        window.db = db;
+        window.addDoc = addDoc;
+        window.getDocs = getDocs;
+        window.collection = collection;
+        window.orderBy = orderBy;
+        window.query = query;
+        window.serverTimestamp = serverTimestamp;
+        
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            loadMessages();
+            
+            // 绑定提交表单事件
+            document.getElementById('messageForm').addEventListener('submit', submitMessage);
+        });
+        
+        // 提交留言
+        async function submitMessage(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('userName').value.trim();
+            const message = document.getElementById('userMessage').value.trim();
+            
+            if (!name || !message) {
+                alert('请填写姓名和留言内容！');
+                return;
+            }
+            
+            try {
+                await addDoc(collection(db, 'messages'), {
+                    name: name,
+                    message: message,
+                    timestamp: serverTimestamp(),
+                    createdAt: new Date().toISOString()
+                });
+                
+                // 清空表单
+                document.getElementById('messageForm').reset();
+                
+                // 重新加载留言
+                loadMessages();
+                
+                alert('留言提交成功！');
+            } catch (error) {
+                console.error('提交留言失败:', error);
+                alert('提交失败，请稍后重试！');
+            }
+        }
+        
+        // 加载留言
+        async function loadMessages() {
+            try {
+                const q = query(collection(db, 'messages'), orderBy('timestamp', 'desc'));
+                const querySnapshot = await getDocs(q);
+                
+                const messagesContainer = document.getElementById('messagesContainer');
+                messagesContainer.innerHTML = '';
+                
+                if (querySnapshot.empty) {
+                    messagesContainer.innerHTML = '<p class="no-messages">暂无留言，快来留下第一条留言吧！</p>';
+                    return;
+                }
+                
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const messageElement = createMessageElement(data);
+                    messagesContainer.appendChild(messageElement);
+                });
+            } catch (error) {
+                console.error('加载留言失败:', error);
+                document.getElementById('messagesContainer').innerHTML = '<p class="error-message">加载留言失败，请刷新页面重试！</p>';
+            }
+        }
+        
+        // 创建留言元素
+        function createMessageElement(data) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message-item';
+            
+            const date = data.timestamp ? 
+                new Date(data.timestamp.seconds * 1000).toLocaleString('zh-CN') : 
+                new Date(data.createdAt).toLocaleString('zh-CN');
+            
+            messageDiv.innerHTML = `
+                <div class="message-header">
+                    <span class="message-name">${escapeHtml(data.name)}</span>
+                    <span class="message-date">${date}</span>
+                </div>
+                <div class="message-content">${escapeHtml(data.message)}</div>
+            `;
+            
+            return messageDiv;
+        }
+        
+        // HTML转义
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // 暴露函数到全局作用域
+        window.submitMessage = submitMessage;
+        window.loadMessages = loadMessages;
+    </script>
+</head>
+<body>
+    <div class="messages-container">
+        <div class="messages-card">
+            <div class="messages-header">
+                <h1 class="messages-title">💬 留言板</h1>
+                <p class="messages-subtitle">欢迎留下您的足迹</p>
+            </div>
+            
+            <!-- 留言表单 -->
+            <div class="message-form-section">
+                <h2>写下留言</h2>
+                <form id="messageForm" class="message-form">
+                    <div class="form-group">
+                        <label for="userName">姓名 *</label>
+                        <input type="text" id="userName" name="userName" required maxlength="20" placeholder="请输入您的姓名">
+                    </div>
+                    <div class="form-group">
+                        <label for="userMessage">留言内容 *</label>
+                        <textarea id="userMessage" name="userMessage" required maxlength="500" rows="4" placeholder="请输入留言内容..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-button">发表留言</button>
+                </form>
+            </div>
+            
+            <!-- 留言列表 -->
+            <div class="messages-list-section">
+                <h2>所有留言</h2>
+                <div id="messagesContainer" class="messages-list">
+                    <p class="loading-message">正在加载留言...</p>
+                </div>
+            </div>
+            
+            <div class="messages-actions">
+                <a href="about.html" class="back-button">← 返回个人介绍</a>
+                <a href="index.html" class="home-button">🏠 回到首页</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

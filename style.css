@@ -297,6 +297,7 @@ body {
     align-items: center;
     padding-top: 20px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
+    gap: 12px;
 }
 
 .back-button {
@@ -313,6 +314,22 @@ body {
 
 .back-button:hover {
     background: rgba(255, 255, 255, 0.1);
+}
+
+.messages-button {
+    padding: 12px 20px;
+    border-radius: 16px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #ffffff;
+    text-decoration: none;
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    transition: all 0.2s ease-out;
+}
+
+.messages-button:hover {
+    background: rgba(59, 130, 246, 0.2);
 }
 
 .contact-button {
@@ -355,9 +372,223 @@ body {
         gap: 12px;
     }
     
-    .back-button, .contact-button {
+    .back-button, .messages-button, .contact-button {
         width: 100%;
         text-align: center;
+    }
+}
+
+/* 留言板页面样式 */
+.messages-container {
+    width: 100%;
+    max-width: 60rem;
+    padding: 40px 20px;
+}
+
+.messages-card {
+    background: rgba(249, 250, 251, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 40px;
+    backdrop-filter: blur(10px);
+}
+
+.messages-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.messages-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+}
+
+.messages-subtitle {
+    font-size: 16px;
+    color: rgb(163, 163, 163);
+}
+
+.message-form-section, .messages-list-section {
+    margin-bottom: 40px;
+}
+
+.message-form-section h2, .messages-list-section h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 20px;
+    border-left: 3px solid #3b82f6;
+    padding-left: 12px;
+}
+
+.message-form {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 16px;
+    padding: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 14px;
+    font-family: inherit;
+    resize: vertical;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.form-group input::placeholder, .form-group textarea::placeholder {
+    color: rgb(163, 163, 163);
+}
+
+.submit-button {
+    background: #3b82f6;
+    color: #ffffff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+}
+
+.submit-button:hover {
+    background: #2563eb;
+}
+
+.messages-list {
+    max-height: 600px;
+    overflow-y: auto;
+    border-radius: 16px;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.message-item {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.message-item:last-child {
+    margin-bottom: 0;
+}
+
+.message-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.message-name {
+    font-weight: 600;
+    color: #3b82f6;
+    font-size: 14px;
+}
+
+.message-date {
+    font-size: 12px;
+    color: rgb(163, 163, 163);
+}
+
+.message-content {
+    color: rgb(200, 200, 200);
+    line-height: 1.5;
+    font-size: 14px;
+    word-wrap: break-word;
+}
+
+.no-messages, .loading-message, .error-message {
+    text-align: center;
+    color: rgb(163, 163, 163);
+    font-style: italic;
+    padding: 20px;
+}
+
+.error-message {
+    color: #ef4444;
+}
+
+.messages-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    gap: 12px;
+}
+
+.home-button {
+    padding: 12px 20px;
+    border-radius: 16px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #ffffff;
+    text-decoration: none;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    transition: all 0.2s ease-out;
+}
+
+.home-button:hover {
+    background: rgba(16, 185, 129, 0.2);
+}
+
+/* 留言板响应式 */
+@media (max-width: 768px) {
+    .messages-card {
+        padding: 24px;
+    }
+    
+    .messages-title {
+        font-size: 28px;
+    }
+    
+    .message-form {
+        padding: 20px;
+    }
+    
+    .messages-actions {
+        flex-direction: column;
+    }
+    
+    .back-button, .home-button {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .message-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
     }
 }
 
