@@ -1,159 +1,60 @@
-/* 全局样式 */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    background-color: #f4f4f4;
-}
-
-.container {
-    width: 80%;
-    margin: 0 auto;
-}
-
-h1, h2, h3, h4 {
-    margin: 10px 0;
-    font-family: 'Roboto', sans-serif;
-}
-
-/* 导航栏 */
-nav {
-    background-color: #333;
-    color: #fff;
-    padding: 20px 0;
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-nav h1 {
-    font-size: 24px;
-}
-
-nav ul {
-    list-style: none;
-    display: flex;
-    margin: 0;
-    padding: 0;
-}
-
-nav ul li {
-    margin-left: 20px;
-}
-
-nav ul li a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 16px;
-}
-
-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 5px;
-}
-
-button:hover {
-    background-color: #45a049;
-}
-
-/* 留言表单 */
-#contact {
-    background-color: #fff;
+/* Comment section container */
+.comment-section {
+    width: 100%;
+    max-width: 800px; /* You can adjust this to your preference */
+    margin: 0 auto;  /* Centers the container */
     padding: 20px;
+    background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-form {
-    display: flex;
-    flex-direction: column;
-}
-
-form input, form textarea {
-    padding: 10px;
-    margin: 10px 0;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 100%;
-    max-width: 500px;
-}
-
-form button {
-    align-self: flex-start;
-}
-
-/* 留言列表 */
-#messages-list {
+/* Message list (centered and styled) */
+#message-list {
     list-style: none;
     padding: 0;
     margin: 20px 0;
+    max-height: 300px;
+    overflow-y: auto;
 }
 
-#messages-list li {
+#message-list .message {
     background-color: #f9f9f9;
     padding: 10px;
     margin: 5px 0;
     border-radius: 5px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
 }
 
-#messages-list li button {
-    background-color: #f44336;
-    border: none;
-    padding: 5px 10px;
+/* Message input container (centered) */
+#message-input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;  /* Center the form fields */
+}
+
+#message-input-container input,
+#message-input-container textarea {
+    width: 80%;  /* Adjust width to fit nicely */
+    max-width: 600px;  /* Max width for form inputs */
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#message-input-container button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
     color: white;
+    border: none;
     border-radius: 5px;
     cursor: pointer;
 }
 
-#messages-list li button:hover {
-    background-color: #d32f2f;
-}
-
-/* 设置对话框 */
-.dialog {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: none;
-    justify-content: center;
-    align-items: center;
-}
-
-.dialog-content {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    width: 300px;
-    text-align: center;
-}
-
-.dialog input {
-    width: 80%;
-    padding: 10px;
-    margin: 10px 0;
-}
-
-#delete-section {
-    display: none;
-}
-
-footer {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 20px;
+#message-input-container button:hover {
+    background-color: #45a049;
 }
