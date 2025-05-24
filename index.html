@@ -19,7 +19,6 @@
                 </div>
                 <div class="card-actions">
                     <a href="about.html" class="card-link">了解更多 →</a>
-                    <button class="card-button">联系我</button>
                 </div>
             </div>
         </div>
@@ -71,7 +70,7 @@
                 if (cardElements.description) cardElements.description.style.transform = 'translateZ(60px)';
                 cardElements.imageContainer.style.transform = 'translateZ(100px)';
                 cardElements.link.style.transform = 'translateZ(20px)';
-                cardElements.button.style.transform = 'translateZ(20px)';
+                if (cardElements.button) cardElements.button.style.transform = 'translateZ(20px)';
             } else {
                 Object.values(cardElements).forEach(element => {
                     if (element) {
