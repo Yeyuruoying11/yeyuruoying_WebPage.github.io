@@ -1,1 +1,157 @@
- 
+/* 全局样式重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #0a0a0a;
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* 3D Card Container */
+.card-container {
+    perspective: 1000px;
+    padding: 80px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
+    font-variant: tabular-nums;
+}
+
+/* Card Body */
+.card {
+    width: 100%;
+    max-width: 30rem;
+    height: auto;
+    position: relative;
+    background: rgba(249, 250, 251, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 24px;
+    transform-style: preserve-3d;
+    transition: all 0.2s ease-out;
+    cursor: pointer;
+}
+
+.card:hover {
+    box-shadow: 0 25px 50px -12px rgba(16, 185, 129, 0.1);
+}
+
+.card-content {
+    transform-style: preserve-3d;
+}
+
+/* Card Items */
+.card-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    transform: translateZ(50px);
+    transition: all 0.2s ease-out;
+}
+
+.card-description {
+    font-size: 14px;
+    color: rgb(163, 163, 163);
+    max-width: 24rem;
+    margin-top: 8px;
+    margin-bottom: 16px;
+    transform: translateZ(60px);
+    transition: all 0.2s ease-out;
+}
+
+.card-image-container {
+    width: 100%;
+    margin-top: 16px;
+    margin-bottom: 80px;
+    transform: translateZ(100px);
+    transition: all 0.2s ease-out;
+}
+
+.card-image {
+    height: 240px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.card:hover .card-image {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Card Actions */
+.card-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 80px;
+}
+
+.card-link {
+    padding: 8px 16px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 400;
+    color: #ffffff;
+    text-decoration: none;
+    transform: translateZ(20px);
+    transition: all 0.2s ease-out;
+}
+
+.card-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.card-button {
+    padding: 8px 16px;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #000000;
+    font-size: 12px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transform: translateZ(20px);
+    transition: all 0.2s ease-out;
+}
+
+.card-button:hover {
+    background: #f3f4f6;
+}
+
+/* 3D 变换效果 */
+.card.mouse-entered .card-title {
+    transform: translateZ(50px);
+}
+
+.card.mouse-entered .card-description {
+    transform: translateZ(60px);
+}
+
+.card.mouse-entered .card-image-container {
+    transform: translateZ(100px);
+}
+
+.card.mouse-entered .card-link,
+.card.mouse-entered .card-button {
+    transform: translateZ(20px);
+}
+
+/* 暗色模式样式 */
+@media (prefers-color-scheme: dark) {
+    .card {
+        background: rgba(0, 0, 0, 0.9);
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+} 

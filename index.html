@@ -5,62 +5,90 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>叶雨若樱的个人主页</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <nav>
-            <h1>叶雨若樱</h1>
-            <ul>
-                <li><a href="#welcome">首页</a></li>
-                <li><a href="#contact">留言</a></li>
-            </ul>
-        </nav>
-
-        <section id="welcome">
-            <div class="card-container">
-                <div class="card">
-                    <div class="card-content">
-                        <h2 class="card-title">叶雨若樱</h2>
-                        <p class="card-description">欢迎来到我的个人主页</p>
-                        <img src="me.jpg" alt="头像" class="card-image">
-                        <button class="card-button">了解更多</button>
-                    </div>
+    <div class="card-container">
+        <div class="card" id="threeDCard">
+            <div class="card-content">
+                <h2 class="card-title">叶雨若樱</h2>
+                <p class="card-description">悬停在此卡片上可以释放CSS透视的力量</p>
+                <div class="card-image-container">
+                    <img src="me.jpg" alt="个人头像" class="card-image">
+                </div>
+                <div class="card-actions">
+                    <a href="#" class="card-link">了解更多 →</a>
+                    <button class="card-button">联系我</button>
                 </div>
             </div>
-        </section>
-
-        <section id="contact">
-            <!-- 原有的留言板内容 -->
-        </section>
+        </div>
     </div>
 
-    <footer>
-        <p>&copy; 2024 叶雨若樱. All rights reserved.</p>
-    </footer>
-
     <script>
-        // 3D 卡片效果
-        const card = document.querySelector('.card');
-        
-        card.addEventListener('mousemove', (e) => {
+        // 获取卡片元素
+        const card = document.getElementById('threeDCard');
+        const cardElements = {
+            title: card.querySelector('.card-title'),
+            description: card.querySelector('.card-description'),
+            imageContainer: card.querySelector('.card-image-container'),
+            link: card.querySelector('.card-link'),
+            button: card.querySelector('.card-button')
+        };
+
+        let isMouseEntered = false;
+
+        // 鼠标移动事件处理
+        function handleMouseMove(e) {
+            if (!card) return;
+            
             const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
+            const x = (e.clientX - rect.left - rect.width / 2) / 25;
+            const y = (e.clientY - rect.top - rect.height / 2) / 25;
             
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            
-            const rotateX = (y - centerY) / 20;
-            const rotateY = (centerX - x) / 20;
-            
-            card.style.setProperty('--rotate-x', `${rotateX}deg`);
-            card.style.setProperty('--rotate-y', `${rotateY}deg`);
-        });
-        
-        card.addEventListener('mouseleave', () => {
-            card.style.setProperty('--rotate-x', '0deg');
-            card.style.setProperty('--rotate-y', '0deg');
-        });
+            card.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+        }
+
+        // 鼠标进入事件处理
+        function handleMouseEnter(e) {
+            isMouseEntered = true;
+            card.classList.add('mouse-entered');
+            updateTransforms();
+        }
+
+        // 鼠标离开事件处理
+        function handleMouseLeave(e) {
+            isMouseEntered = false;
+            card.classList.remove('mouse-entered');
+            card.style.transform = 'rotateY(0deg) rotateX(0deg)';
+            updateTransforms();
+        }
+
+        // 更新3D变换
+        function updateTransforms() {
+            if (isMouseEntered) {
+                cardElements.title.style.transform = 'translateZ(50px)';
+                cardElements.description.style.transform = 'translateZ(60px)';
+                cardElements.imageContainer.style.transform = 'translateZ(100px)';
+                cardElements.link.style.transform = 'translateZ(20px)';
+                cardElements.button.style.transform = 'translateZ(20px)';
+            } else {
+                Object.values(cardElements).forEach(element => {
+                    if (element) {
+                        element.style.transform = 'translateZ(0px)';
+                    }
+                });
+            }
+        }
+
+        // 绑定事件监听器
+        card.addEventListener('mousemove', handleMouseMove);
+        card.addEventListener('mouseenter', handleMouseEnter);
+        card.addEventListener('mouseleave', handleMouseLeave);
+
+        // 初始化变换
+        updateTransforms();
     </script>
 </body>
 </html> 
