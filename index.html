@@ -4,7 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>个人简介</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* 样式简化 */
+        #message-list {
+            margin-top: 20px;
+        }
+        .message {
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+        #message-input-container {
+            margin-top: 20px;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+        }
+        #about, #projects, #skills, #contact {
+            padding: 50px 0;
+        }
+        #projects .card-container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .card {
+            width: 30%;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border: 1px solid #ddd;
+        }
+    </style>
 </head>
 <body>
     <!-- 导航栏 -->
@@ -82,16 +113,18 @@
         </div>
     </section>
 
-    <!-- 联系我 -->
+    <!-- 留言功能 -->
     <section id="contact">
         <div class="container">
             <h2>联系我</h2>
-            <form id="contact-form">
-                <input type="text" name="name" id="name" placeholder="你的名字" required>
-                <input type="email" name="email" id="email" placeholder="你的邮箱" required>
-                <textarea name="message" id="message" placeholder="你的留言" required></textarea>
-                <button type="submit">发送留言</button>
-            </form>
+            <div id="message-list"></div>
+
+            <!-- 留言输入区域 -->
+            <div id="message-input-container">
+                <input type="text" id="name" placeholder="请输入您的姓名" required>
+                <textarea id="message" placeholder="请输入留言内容" required></textarea>
+                <button id="send-message">发送留言</button>
+            </div>
         </div>
     </section>
 
@@ -107,14 +140,12 @@
         </div>
     </footer>
 
-    <!-- Firebase SDK -->
     <script type="module">
-        // Import the functions you need from the SDKs you need
+        // 引入 Firebase SDK
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
         import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-analytics.js";
 
-        // Your web app's Firebase configuration
+        // Firebase 配置信息
         const firebaseConfig = {
             apiKey: "AIzaSyBoF8iDEYaz-nDz37c3Zm9x8Of4ULNtZw4",
             authDomain: "mywebsite-22e7d.firebaseapp.com",
@@ -125,42 +156,53 @@
             measurementId: "G-ZB3S3902WD"
         };
 
-        // Initialize Firebase
+        // 初始化 Firebase
         const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
         const db = getFirestore(app);
 
-        // Handle form submission
-        document.getElementById("contact-form").addEventListener("submit", async (event) => {
-            event.preventDefault();
-            
-            const name = document.getElementById("name").value;
-            const email = document.getElementById("email").value;
-            const message = document.getElementById("message").value;
-
-            try {
-                // Add a new document with a generated ID
-                const docRef = await addDoc(collection(db, "messages"), {
-                    name: name,
-                    email: email,
-                    message: message,
-                    timestamp: new Date()
-                });
-                alert("留言发送成功!");
-            } catch (e) {
-                console.error("Error adding document: ", e);
-            }
-        });
-
-        // Display all messages (for testing)
-        async function fetchMessages() {
+        // 获取留言并显示
+        async function loadMessages() {
             const querySnapshot = await getDocs(collection(db, "messages"));
+            const messageList = document.getElementById("message-list");
+            messageList.innerHTML = "";  // 清空现有留言
+
             querySnapshot.forEach((doc) => {
-                console.log(doc.id, " => ", doc.data());
+                const data = doc.data();
+                const messageElement = document.createElement("div");
+                messageElement.classList.add("message");
+                messageElement.innerHTML = `
+                    <p><strong>${data.name}</strong></p>
+                    <p>${data.message}</p>
+                `;
+                messageList.appendChild(messageElement);
             });
         }
 
-        fetchMessages(); // For testing purposes
+        // 发送留言并保存到数据库
+        document.getElementById("send-message").addEventListener("click", async () => {
+            const name = document.getElementById("name").value;
+            const message = document.getElementById("message").value;
+
+            if (name && message) {
+                // 将数据保存到 Firestore
+                try {
+                    await addDoc(collection(db, "messages"), {
+                        name: name,
+                        message: message,
+                        timestamp: new Date()
+                    });
+                    alert("留言发送成功!");
+                    loadMessages();  // 刷新留言列表
+                } catch (e) {
+                    console.error("错误：", e);
+                }
+            } else {
+                alert("请输入姓名和留言内容!");
+            }
+        });
+
+        // 页面加载时加载留言
+        window.onload = loadMessages;
     </script>
 </body>
 </html>
