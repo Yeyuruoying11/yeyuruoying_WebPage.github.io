@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人简介</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <div class="container">
+            <h1>Yihao Tao</h1>
+            <ul>
+                <li><a href="#about">关于我</a></li>
+                <li><a href="#projects">项目</a></li>
+                <li><a href="#skills">技能</a></li>
+                <li><a href="#contact">联系我</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 欢迎区域 -->
+    <section id="about">
+        <div class="container">
+            <div class="welcome">
+                <h2>欢迎来到我的个人页面</h2>
+                <p>你好，我是 Yihao Tao，一个热爱编程和设计的开发者。</p>
+                <img src="avatar.jpg" alt="头像" class="avatar">
+            </div>
+        </div>
+    </section>
+
+    <!-- 项目展示 -->
+    <section id="projects">
+        <div class="container">
+            <h2>我的项目</h2>
+            <div class="card-container">
+                <div class="card">
+                    <img src="project1.jpg" alt="项目1">
+                    <h3>项目 1</h3>
+                    <p>描述这个项目的内容。</p>
+                </div>
+                <div class="card">
+                    <img src="project2.jpg" alt="项目2">
+                    <h3>项目 2</h3>
+                    <p>描述这个项目的内容。</p>
+                </div>
+                <div class="card">
+                    <img src="project3.jpg" alt="项目3">
+                    <h3>项目 3</h3>
+                    <p>描述这个项目的内容。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技能展示 -->
+    <section id="skills">
+        <div class="container">
+            <h2>技能</h2>
+            <div class="skills-container">
+                <div class="skill">
+                    <h3>HTML</h3>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 90%;"></div>
+                    </div>
+                </div>
+                <div class="skill">
+                    <h3>CSS</h3>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 80%;"></div>
+                    </div>
+                </div>
+                <div class="skill">
+                    <h3>JavaScript</h3>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 70%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 留言功能 -->
+<section id="contact">
+    <div class="container">
+        <h2>联系我</h2>
+        <!-- Updated: add a comment section container -->
+        <div class="comment-section">
+            <div id="message-list"></div>
+
+            <!-- 留言输入区域 -->
+            <div id="message-input-container">
+                <input type="text" id="name" placeholder="请输入您的姓名" required>
+                <textarea id="message" placeholder="请输入留言内容" required></textarea>
+                <button id="send-message">发送留言</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <p>版权所有 © 2025 Yihao Tao</p>
+            <div class="social-links">
+                <a href="#">GitHub</a>
+                <a href="#">LinkedIn</a>
+                <a href="#">Twitter</a>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module">
+        // 引入 Firebase SDK
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
+
+        // Firebase 配置信息
+        const firebaseConfig = {
+            apiKey: "AIzaSyBoF8iDEYaz-nDz37c3Zm9x8Of4ULNtZw4",
+            authDomain: "mywebsite-22e7d.firebaseapp.com",
+            projectId: "mywebsite-22e7d",
+            storageBucket: "mywebsite-22e7d.firebasestorage.app",
+            messagingSenderId: "482028113611",
+            appId: "1:482028113611:web:fb03d4a33b4adfba15154e",
+            measurementId: "G-ZB3S3902WD"
+        };
+
+        // 初始化 Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // 获取留言并显示
+        async function loadMessages() {
+            const querySnapshot = await getDocs(collection(db, "messages"));
+            const messageList = document.getElementById("message-list");
+            messageList.innerHTML = "";  // 清空现有留言
+
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                const messageElement = document.createElement("div");
+                messageElement.classList.add("message");
+                messageElement.innerHTML = `
+                    <p><strong>${data.name}</strong></p>
+                    <p>${data.message}</p>
+                `;
+                messageList.appendChild(messageElement);
+            });
+        }
+
+        // 发送留言并保存到数据库
+        document.getElementById("send-message").addEventListener("click", async () => {
+            const name = document.getElementById("name").value;
+            const message = document.getElementById("message").value;
+
+            if (name && message) {
+                // 将数据保存到 Firestore
+                try {
+                    await addDoc(collection(db, "messages"), {
+                        name: name,
+                        message: message,
+                        timestamp: new Date()
+                    });
+                    alert("留言发送成功!");
+                    loadMessages();  // 刷新留言列表
+                } catch (e) {
+                    console.error("错误：", e);
+                }
+            } else {
+                alert("请输入姓名和留言内容!");
+            }
+        });
+
+        // 页面加载时加载留言
+        window.onload = loadMessages;
+    </script>
+</body>
+</html>
