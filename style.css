@@ -1,11 +1,10 @@
-/* 通用样式 */
+/* 全局样式 */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     background-color: #f4f4f4;
-    color: #333;
 }
 
 .container {
@@ -13,19 +12,9 @@ body {
     margin: 0 auto;
 }
 
-h1, h2, h3 {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #333;
-}
-
-a {
-    text-decoration: none;
-    color: #333;
-}
-
-ul {
-    list-style: none;
-    padding: 0;
+h1, h2, h3, h4 {
+    margin: 10px 0;
+    font-family: 'Roboto', sans-serif;
 }
 
 /* 导航栏 */
@@ -33,9 +22,7 @@ nav {
     background-color: #333;
     color: #fff;
     padding: 20px 0;
-}
-
-nav .container {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -46,7 +33,10 @@ nav h1 {
 }
 
 nav ul {
+    list-style: none;
     display: flex;
+    margin: 0;
+    padding: 0;
 }
 
 nav ul li {
@@ -55,176 +45,115 @@ nav ul li {
 
 nav ul li a {
     color: #fff;
+    text-decoration: none;
     font-size: 16px;
 }
 
-nav ul li a:hover {
-    color: #f4b400;
-}
-
-/* 欢迎区域 */
-#welcome {
-    padding: 60px 0;
-    background-color: #fff;
-    text-align: center;
-}
-
-#welcome h2 {
-    font-size: 36px;
-    margin-bottom: 10px;
-}
-
-#welcome p {
-    font-size: 18px;
-    margin-bottom: 30px;
-}
-
-#welcome .avatar {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    margin-top: 20px;
-}
-
-/* 项目展示 */
-#projects {
-    background-color: #fff;
-    padding: 60px 0;
-}
-
-.card-container {
-    display: flex;
-    justify-content: space-around;
-}
-
-.card {
-    background-color: #f4f4f4;
-    padding: 20px;
-    border-radius: 8px;
-    text-align: center;
-    width: 30%;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.card img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-}
-
-.card h3 {
-    font-size: 24px;
-    margin: 15px 0;
-}
-
-.card p {
-    font-size: 16px;
-    color: #777;
-}
-
-/* 技能展示 */
-#skills {
-    background-color: #f4f4f4;
-    padding: 60px 0;
-}
-
-.skills-container {
-    display: flex;
-    justify-content: space-around;
-}
-
-.skill {
-    width: 30%;
-}
-
-.skill h3 {
-    font-size: 22px;
-    margin-bottom: 10px;
-}
-
-.progress-bar {
-    background-color: #ddd;
-    border-radius: 5px;
-    height: 10px;
-}
-
-.progress {
+button {
     background-color: #4CAF50;
-    height: 100%;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
     border-radius: 5px;
 }
 
-/* 联系我 */
+button:hover {
+    background-color: #45a049;
+}
+
+/* 留言表单 */
 #contact {
     background-color: #fff;
-    padding: 60px 0;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-#contact h2 {
-    font-size: 30px;
-    margin-bottom: 30px;
-    text-align: center;
+form {
+    display: flex;
+    flex-direction: column;
 }
 
-#message-list {
-    margin-bottom: 20px;
-}
-
-.message {
-    background-color: #f4f4f4;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-}
-
-.message p {
-    margin: 5px 0;
-}
-
-#message-input-container {
-    text-align: center;
-}
-
-#message-input-container input,
-#message-input-container textarea {
-    width: 80%;
+form input, form textarea {
     padding: 10px;
     margin: 10px 0;
-    border: 1px solid #ddd;
+    font-size: 16px;
+    border: 1px solid #ccc;
     border-radius: 5px;
+    width: 100%;
+    max-width: 500px;
 }
 
-#message-input-container button {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: #fff;
+form button {
+    align-self: flex-start;
+}
+
+/* 留言列表 */
+#messages-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+#messages-list li {
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#messages-list li button {
+    background-color: #f44336;
     border: none;
+    padding: 5px 10px;
+    color: white;
     border-radius: 5px;
     cursor: pointer;
 }
 
-#message-input-container button:hover {
-    background-color: #45a049;
+#messages-list li button:hover {
+    background-color: #d32f2f;
 }
 
-/* 页脚 */
-footer {
-    background-color: #333;
-    color: #fff;
-    padding: 20px 0;
+/* 设置对话框 */
+.dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.dialog-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
     text-align: center;
 }
 
-footer .social-links {
-    margin-top: 10px;
+.dialog input {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
 }
 
-footer .social-links a {
-    margin: 0 15px;
+#delete-section {
+    display: none;
+}
+
+footer {
+    background-color: #333;
     color: #fff;
-    font-size: 18px;
-}
-
-footer .social-links a:hover {
-    color: #f4b400;
+    text-align: center;
+    padding: 20px;
 }
