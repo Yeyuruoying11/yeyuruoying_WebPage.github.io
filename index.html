@@ -86,11 +86,11 @@
     <section id="contact">
         <div class="container">
             <h2>联系我</h2>
-            <form action="#" method="post">
-                <input type="text" name="name" placeholder="你的名字" required>
-                <input type="email" name="email" placeholder="你的邮箱" required>
-                <textarea name="message" placeholder="你的消息" required></textarea>
-                <button type="submit">发送消息</button>
+            <form id="contact-form">
+                <input type="text" name="name" id="name" placeholder="你的名字" required>
+                <input type="email" name="email" id="email" placeholder="你的邮箱" required>
+                <textarea name="message" id="message" placeholder="你的留言" required></textarea>
+                <button type="submit">发送留言</button>
             </form>
         </div>
     </section>
@@ -111,6 +111,7 @@
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-analytics.js";
 
         // Your web app's Firebase configuration
@@ -127,6 +128,39 @@
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
+        const db = getFirestore(app);
+
+        // Handle form submission
+        document.getElementById("contact-form").addEventListener("submit", async (event) => {
+            event.preventDefault();
+            
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const message = document.getElementById("message").value;
+
+            try {
+                // Add a new document with a generated ID
+                const docRef = await addDoc(collection(db, "messages"), {
+                    name: name,
+                    email: email,
+                    message: message,
+                    timestamp: new Date()
+                });
+                alert("留言发送成功!");
+            } catch (e) {
+                console.error("Error adding document: ", e);
+            }
+        });
+
+        // Display all messages (for testing)
+        async function fetchMessages() {
+            const querySnapshot = await getDocs(collection(db, "messages"));
+            querySnapshot.forEach((doc) => {
+                console.log(doc.id, " => ", doc.data());
+            });
+        }
+
+        fetchMessages(); // For testing purposes
     </script>
 </body>
 </html>
