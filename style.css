@@ -19,24 +19,25 @@ body {
 /* 3D Card Container */
 .card-container {
     perspective: 1000px;
-    padding: 80px 20px;
+    padding: 60px 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: 'Inter', sans-serif;
     font-variant: tabular-nums;
+    width: 100%;
 }
 
 /* Card Body */
 .card {
     width: 100%;
-    max-width: 30rem;
+    max-width: 40rem;
     height: auto;
     position: relative;
     background: rgba(249, 250, 251, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
-    padding: 24px;
+    border-radius: 16px;
+    padding: 32px;
     transform-style: preserve-3d;
     transition: all 0.2s ease-out;
     cursor: pointer;
@@ -52,37 +53,39 @@ body {
 
 /* Card Items */
 .card-title {
-    font-size: 20px;
+    font-size: 28px;
     font-weight: 700;
     color: #ffffff;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
     transform: translateZ(50px);
     transition: all 0.2s ease-out;
+    text-align: center;
 }
 
 .card-description {
-    font-size: 14px;
+    font-size: 16px;
     color: rgb(163, 163, 163);
-    max-width: 24rem;
-    margin-top: 8px;
-    margin-bottom: 16px;
+    max-width: 100%;
+    margin-top: 12px;
+    margin-bottom: 20px;
     transform: translateZ(60px);
     transition: all 0.2s ease-out;
+    text-align: center;
 }
 
 .card-image-container {
     width: 100%;
-    margin-top: 16px;
-    margin-bottom: 80px;
+    margin-top: 20px;
+    margin-bottom: 32px;
     transform: translateZ(100px);
     transition: all 0.2s ease-out;
 }
 
 .card-image {
-    height: 240px;
+    height: 320px;
     width: 100%;
     object-fit: cover;
-    border-radius: 12px;
+    border-radius: 16px;
     transition: all 0.3s ease;
 }
 
@@ -95,13 +98,13 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 80px;
+    margin-top: 32px;
 }
 
 .card-link {
-    padding: 8px 16px;
-    border-radius: 12px;
-    font-size: 12px;
+    padding: 12px 20px;
+    border-radius: 16px;
+    font-size: 14px;
     font-weight: 400;
     color: #ffffff;
     text-decoration: none;
@@ -114,11 +117,11 @@ body {
 }
 
 .card-button {
-    padding: 8px 16px;
-    border-radius: 12px;
+    padding: 12px 20px;
+    border-radius: 16px;
     background: #ffffff;
     color: #000000;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 700;
     border: none;
     cursor: pointer;
@@ -153,6 +156,22 @@ body {
     .card {
         background: rgba(0, 0, 0, 0.9);
         border-color: rgba(255, 255, 255, 0.2);
+    }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .card {
+        max-width: 90vw;
+        padding: 24px;
+    }
+    
+    .card-title {
+        font-size: 24px;
+    }
+    
+    .card-image {
+        height: 280px;
     }
 }
 
